@@ -60,8 +60,9 @@ senha : 392549
  python manage.py makemigrations
  python manage.py migrate
  
+````
 
-```` 
+teste
 
 
 
