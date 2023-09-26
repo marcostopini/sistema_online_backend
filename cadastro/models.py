@@ -13,3 +13,13 @@ class Curso(models.Model):
                                 decimal_places=2,
                                 null=False)
 
+    def __str__(self):
+        return self.nome
+
+class Turma(models.Model):
+    id_curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING)
+    dataInicio = models.DateTimeField(null=False)
+    dataTermino = models.DateTimeField(null=False)
+
+    def __str__(self):
+        return f"{self.curso.nome} - {self.dataInicio} - {self.dataTermino}"
