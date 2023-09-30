@@ -16,6 +16,7 @@ class Curso(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Turma(models.Model):
     id_curso = models.ForeignKey(Curso, on_delete=models.DO_NOTHING)
     dataInicio = models.DateTimeField(null=False)

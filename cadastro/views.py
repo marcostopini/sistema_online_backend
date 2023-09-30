@@ -1,16 +1,19 @@
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from cadastro.forms import CursoForm
-from cadastro.models import Curso
+from cadastro.models import Curso,Turma
 
 
 # Create your views here.
 def index(request):
     return render(request, 'inicio.html')
 
+
 def teste(request):
     return HttpResponse("Isso é um teste!")
+
 
 def print_em_html(request):
     return HttpResponse("<h2>Um título</h2>")
@@ -19,6 +22,7 @@ def print_em_html(request):
 def listarCursos(request):
     cursos = Curso.objects.all().order_by('nome')
     return render(request, template_name="listar_cursos.html", context={'lista': cursos})
+
 
 def incluirCurso(request):
     if request.method == 'POST':
@@ -32,7 +36,8 @@ def incluirCurso(request):
                 pass
     else:
         form = CursoForm()
-    return render(request, "incluir_curso.html", {'form': form })
+    return render(request, "incluir_curso.html", {'form': form})
+
 
 def editarCurso(request, id):
     curso = Curso.objects.get(id_curso=id)
@@ -50,9 +55,13 @@ def editarCurso(request, id):
     return render(request, "incluir_curso.html", {'form': form})
 
 def excluirCurso(request, id):
-    curso = Curso.objects.get(id_curso=id)
+    curso = Curso.objects.get(codigo=id)
     try:
         curso.delete()
     except:
-        pass
+        messages.error(request, "Não é possível excluir.")
     return redirect('listarCurso')
+
+def listarTurmas(request):
+    turmas = Turma.objects.all()
+    return render(request, 'listar_turmas.html', {'turmas': turmas})
